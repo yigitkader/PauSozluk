@@ -12,7 +12,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   </head>
   <body>
-    <?php include 'header.php'; ?>
+
+    <!-- Diğer dosyaları dahil ediyoruz -->
+    <?php include 'header.php'; include 'connect.php'; include 'functions.php'; ?>
     <hr>
 
 
@@ -48,7 +50,8 @@
 						</div>
 
              <div class="form-group ">
-							<button type="button" class="btn btn-primary btn-lg btn-block login-button">Giriş Yap</button>
+							<!-- <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Giriş Yap</button> -->
+              <input class="btn btn-primary btn-lg btn-block login-button" type="submit" name="girisyap" value="Giriş Yap">
 						</div>
 
 					</form>
@@ -56,6 +59,41 @@
 			</div>
 		</div>
 
+    <?php
+
+      if (isset($_POST['girisyap'])) {
+
+        $username=post('username');
+        $pass=md5(post('password'));
+        if (!isset($username) || !isset($pass) || empty($username) || empty($pass)) {
+
+          $message0="Değerler boş girilemez";
+          echo "<script type='text/javascript'>alert('$message0');</script>";
+
+        }
+        else {
+          $query="SELECT * FROM USER WHERE KULLANICI_ADI=:kadi AND SIFRE=:pass";
+          $stmt=$db->prepare($query);
+          $stmt->execute(array(
+            'kadi'=>$username,
+            'pass'=>$pass
+          ));
+          if ($stmt->rowCount()==1) {
+            echo '<meta http-equiv="refresh" content="1;url=index.php" />' ;
+          }
+          else {
+            $message1="Giriş bilgileriniz hatalıdır";
+            echo "<script type='text/javascript'>alert('$message1');</script>";
+            echo '<meta http-equiv="refresh" content="1;url=login.php" />' ;
+
+
+          }
+        }
+      }
+
+
+
+     ?>
 
 
 

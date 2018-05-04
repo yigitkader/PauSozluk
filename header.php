@@ -19,6 +19,8 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a style="color:white;" href="login.php">Giris Yap</a></li>
         <li> <a style="color:white;" href="register.php">Kayıt Ol</a> </li>
+        <li style="display:none;"> <a style="color:white;" href="#" >Profilim</a>  </li>
+        <li style="display:none;"> <a style="color:white;" href="#" >Çıkış Yap</a>  </li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
