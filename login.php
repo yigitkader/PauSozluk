@@ -61,6 +61,7 @@
 
     <?php
 
+
       if (isset($_POST['girisyap'])) {
 
         $username=post('username');
@@ -80,6 +81,7 @@
           ));
           if ($stmt->rowCount()==1) {
             echo '<meta http-equiv="refresh" content="1;url=index.php" />' ;
+            
           }
           else {
             $message1="Giriş bilgileriniz hatalıdır";

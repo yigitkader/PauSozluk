@@ -83,7 +83,6 @@
               $stmt=$db->prepare($query);
               $stmt->execute(array('mail'=>$mail,'kadi'=>$username));
               if ($stmt->rowCount()>0) {
-                // echo "<b style='text-align:center;'>Bu mail adresi veya kullanıcı adı alınmıstır</b>";
                 $message="Bu kullanıcı adı veya mail adresi alınmıstır";
                 echo "<script type='text/javascript'>alert('$message');</script>";
 

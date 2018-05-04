@@ -17,6 +17,7 @@
         <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
       </form>
       <ul class="nav navbar-nav navbar-right">
+
         <li><a style="color:white;" href="login.php">Giris Yap</a></li>
         <li> <a style="color:white;" href="register.php">Kayıt Ol</a> </li>
         <li style="display:none;"> <a style="color:white;" href="#" >Profilim</a>  </li>
