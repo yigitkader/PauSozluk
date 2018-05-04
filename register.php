@@ -11,7 +11,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   </head>
   <body>
-    <?php include 'header.php'; ?><hr>
+    <?php include 'header.php'; include 'connect.php'; include 'functions.php';   ?><hr>
 
 
         <div style="width:40%" class="container">
@@ -19,18 +19,18 @@
     				<div class="panel-heading">
     	               <div class="panel-title text-center">
     	               		<h1 class="title">Paü Sözlük</h1>
-    	               		<hr />
+    	               		<hr/>
     	               	</div>
     	            </div>
     				<div class="main-login main-center">
-    					<form class="form-horizontal" method="post" action="#">
+    					<form class="form-horizontal" method="post" action="">
 
     						<div class="form-group">
     							<label for="email" class="cols-sm-2 control-label">Email Adresiniz</label>
     							<div class="cols-sm-10">
     								<div class="input-group">
     									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-    									<input type="text" class="form-control" name="email" id="email"  placeholder="Email adresinizi giriniz"/>
+    									<input required="required" type="email" class="form-control" name="email" id="email"  placeholder="Email adresinizi giriniz"/>
     								</div>
     							</div>
     						</div>
@@ -40,7 +40,7 @@
     							<div class="cols-sm-10">
     								<div class="input-group">
     									<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-    									<input type="text" class="form-control" name="username" id="username"  placeholder="Kullanıcı adı giriniz"/>
+    									<input required="required" type="text" class="form-control" name="username" id="username"  placeholder="Kullanıcı adı giriniz"/>
     								</div>
     							</div>
     						</div>
@@ -50,19 +50,67 @@
     							<div class="cols-sm-10">
     								<div class="input-group">
     									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-    									<input type="password" class="form-control" name="password" id="password"  placeholder="Parola giriniz"/>
+    									<input required="required" type="password" class="form-control" name="password" id="password"  placeholder="Parola giriniz"/>
     								</div>
     							</div>
     						</div>
 
                  <div class="form-group ">
-    							<button type="button" class="btn btn-primary btn-lg btn-block login-button">Kayıt Ol</button>
+    							<!-- <button  type="submit" class="btn btn-primary btn-lg btn-block login-button">Kayıt Ol</button> -->
+                  <input class="btn btn-primary btn-lg btn-block login-button" type="submit" name="kayitol" value="Kayıt Ol">
     						</div>
 
     					</form>
     				</div>
     			</div>
     		</div>
+
+        <?php
+
+          if (isset($_POST['kayitol'])) {
+
+            $mail=post('email');
+            $username=post('username');
+            $pass=md5(post('password'));
+
+            if (!isset($mail) || !isset($username) || !isset($pass) || empty($mail) || empty($username) || empty($pass) ) {
+              $message0="Değerler boş girilemez";
+              echo "<script type='text/javascript'>alert('$message0');</script>";
+              echo '<meta http-equiv="refresh" content="1;url=register.php" />' ;
+            }
+            else {
+              $query="SELECT * FROM USER WHERE MAIL_ADRES=:mail OR KULLANICI_ADI=:kadi";
+              $stmt=$db->prepare($query);
+              $stmt->execute(array('mail'=>$mail,'kadi'=>$username));
+              if ($stmt->rowCount()>0) {
+                // echo "<b style='text-align:center;'>Bu mail adresi veya kullanıcı adı alınmıstır</b>";
+                $message="Bu kullanıcı adı veya mail adresi alınmıstır";
+                echo "<script type='text/javascript'>alert('$message');</script>";
+
+                echo '<meta http-equiv="refresh" content="1;url=register.php" />' ;
+              }
+              else {
+                $query="INSERT INTO USER(MAIL_ADRES,KULLANICI_ADI,SIFRE) VALUES(:mail,:kadi,:pass)";
+                $stmt=$db->prepare($query);
+                $stmt->execute(array(
+                  'mail'=>$mail,
+                  'kadi'=>$username,
+                  'pass'=>$pass
+                ));
+                if ($stmt) {
+                  $message2="Uyelik isleminiz tamamlanmıştır!";
+                  echo "<script type='text/javascript'>alert('$message2');</script>";
+
+                  echo '<meta http-equiv="refresh" content="1;url=index.php" />' ;
+                }
+              }
+            }
+          }
+
+
+
+
+         ?>
 
 
   </body>
