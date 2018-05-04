@@ -1,5 +1,4 @@
 
-
 <nav style="padding:0.6%;" class="nav navbar text-light bg-primary">
   <!-- Navbar content -->
   <div class="container-fluid">
@@ -31,10 +30,12 @@
 <div style="text-align:center;" class="container">
 
 <button type="button" class="btn btn-default">Gündem</button>
-<button type="button" class="btn btn-primary">Primary</button>
-<button type="button" class="btn btn-success">Success</button>
-<button type="button" class="btn btn-info">Info</button>
-<button type="button" class="btn btn-warning">Warning</button>
+<button type="button" class="btn btn-primary">Genel</button>
+<button type="button" class="btn btn-success">Spor</button>
+<button type="button" class="btn btn-info">Yaşam</button>
+<button type="button" class="btn btn-warning">Haberler</button>
 <button type="button" class="btn btn-danger">Son Dakika</button>
+<button style="background-color:yellow;" type="button" class="btn"><a href="chat.php">Chat Alanı</a></button>
+
 
 </div>
