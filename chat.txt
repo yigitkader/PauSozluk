@@ -1,46 +1,5 @@
-01:20:01		fgfcvb	
-01:20:03		xcvcxv	
-01:20:05		xcvxcvxc	
-01:20:06		xvxcvx	
-01:20:07		xcvxv	
-01:20:08		cxvxcvxc	
-01:20:09		xvxvx	
-01:20:10		vv	
-01:20:11		vv	
-01:20:12		vvv	
-01:20:13		v	
-01:20:14		vv	
-01:20:15		vv	
-01:20:53	yigit	xvcxcv	1
-01:20:54	yigit	cvxvxvx	1
-01:20:55	yigit	xvc	1
-01:20:57	yigit	xcvxxc	1
-01:20:58	yigit	xcvx	1
-01:20:58	yigit	xcxxv	1
-01:20:59	yigit	cxv	1
-01:21:01	yigit	vxcxcv	1
-01:21:02	yigit	xcvvxc	1
-01:21:03	yigit	cxvxv	1
-01:23:18	yigit	merhaba gencler	1
-01:23:46	yigit	dffdgdfg	0
-01:23:47	yigit	ddfgdfg	0
-01:23:48	yigit	dfgdfgdg	0
-01:23:49	yigit	dfgdgd	0
-01:23:50	yigit	dfgdf	0
-01:27:23		merhaba	0
-01:27:48		xcvxvx	0
-01:28:14		dsfsfs	0
-01:29:48	yigit	sdfsfd	0
-01:37:29	yigit	SELAM	0
-01:37:33	yigit	merhaba	0
-01:40:33	yigit	nömn	0
-01:40:35	yigit	ömnömn	0
-01:40:37	yigit	mnmön	0
-01:41:15	yigit	dfgdg	0
-01:41:16	yigit	fdgdfg	0
-01:41:18	yigit	dfggdgdfgd	0
-01:41:20	yigit	hhhh	0
-01:41:22	yigit	hhhh	0
-01:41:23	yigit	hhhh	0
-01:44:18	yigit	selam gencler	0
-01:45:10	yigit	xvcxvc	0
+00:06:43	yigit	dsfsdf	0
+00:06:44	yigit	dsfsdf	0
+00:06:46	yigit	fsdsdfdsfsd	0
+00:06:48	yigit	dfsdf	0
+00:07:03	yigit	hahaha	0

@@ -1,5 +1,5 @@
 <?php 
-// session_start();
+ session_start();
 error_reporting(0);
 include("connection.php");
 
@@ -7,9 +7,7 @@ header("Content-type: text/html; charset=iso-8859-9");
 
 $tip=strip_tags($_POST["tip"]);
 $mesaj=iconv("UTF-8","ISO-8859-9",strip_tags(trim($_POST["mesaj"])));
-// $kullanici=$_SESSION["kullaniciAdi"]; 
-// $rutbe=$_SESSION["rutbe"];
-$kullanici='yigit';
+$kullanici=$_SESSION["kullaniciad"]; 
 $rutbe="0";
 
 $tarih=date("H:i:s");

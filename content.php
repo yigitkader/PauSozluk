@@ -19,6 +19,7 @@
 
      <!-- En populer yazılar -->
     <div style=" border-right:1px solid #aaa;" class="col-md-6">
+      <b>Baslık Olustur</b><br><br>
       <?php
        for ($i=0; $i <40 ; $i++) {
          echo '

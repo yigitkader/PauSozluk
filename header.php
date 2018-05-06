@@ -1,4 +1,4 @@
-
+<?php error_reporting(0); ?>
 <nav style="padding:0.6%;" class="nav navbar text-light bg-primary">
   <!-- Navbar content -->
   <div class="container-fluid">
@@ -6,7 +6,7 @@
     <div class="navbar-brand">
       <img src="img/pau.png" alt="" height="20" width="60">
     </div>
-    <a style="color:white;" class="navbar-brand" href="index.php">Paü Sözlük</a>
+    <a style="color:white;" class="navbar-brand" href="index.php"><b>Paü</b><b style="color:black">Sözlük</b></a>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -17,11 +17,25 @@
         <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
       </form>
       <ul class="nav navbar-nav navbar-right">
+        <?php 
+        if ($_SESSION['oturum']==1) {
+          ?>
+          <li> <a style="color:white;" href="profil.php" >Profilim</a>  </li>
+          <li> <a style="color:white;" href="out.php" >Çıkış Yap</a>  </li>
 
-        <li><a style="color:white;" href="login.php">Giris Yap</a></li>
-        <li> <a style="color:white;" href="register.php">Kayıt Ol</a> </li>
-        <li style="display:none;"> <a style="color:white;" href="#" >Profilim</a>  </li>
-        <li style="display:none;"> <a style="color:white;" href="#" >Çıkış Yap</a>  </li>
+          <?php  
+        }
+        else {
+          ?>
+          <li><a style="color:white;" href="login.php">Giris Yap</a></li>
+          <li> <a style="color:white;" href="register.php">Kayıt Ol</a> </li>
+
+          <?php 
+        }
+
+        ?>
+        
+
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -31,14 +45,14 @@
 
 <!-- Baslık Butonlarımız   -->
 <div style="text-align:center;" class="container">
-
-<button type="button" class="btn btn-default">Gündem</button>
-<button type="button" class="btn btn-primary">Genel</button>
-<button type="button" class="btn btn-success">Spor</button>
-<button type="button" class="btn btn-info">Yaşam</button>
-<button type="button" class="btn btn-warning">Haberler</button>
-<button type="button" class="btn btn-danger">Son Dakika</button>
-<button style="background-color:yellow;" type="button" class="btn"><a href="chat.php">Chat Alanı</a></button>
+  <!-- Form Alanına Alınacak -->
+  <button type="button" class="btn btn-default">Gündem</button>
+  <button type="button" class="btn btn-primary">Genel</button>
+  <button type="button" class="btn btn-success">Spor</button>
+  <button type="button" class="btn btn-info">Yaşam</button>
+  <button type="button" class="btn btn-warning">Haberler</button>
+  <button type="button" class="btn btn-danger">Son Dakika</button>
+  <button style="background-color:yellow;" type="button" class="btn"><a href="chat.php">Chat Alanı</a></button>
 
 
 </div>
