@@ -3,8 +3,8 @@
   <!-- Navbar content -->
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-brand">
-      <img src="img/pau.png" alt="" height="20" width="60">
+    <div style="margin-top:-25px; margin-left: 0 ;" class="navbar-brand">
+      <img src="img/pauLogo.png" alt="" height="70" width="150">
     </div>
     <a style="color:white;" class="navbar-brand" href="index.php"><b>PaüSözlük</b></a>
 
@@ -46,13 +46,14 @@
 <!-- Baslık Butonlarımız   -->
 <div style="text-align:center;" class="container">
   <!-- Form Alanına Alınacak -->
-  <button type="button" class="btn btn-default">Gündem</button>
-  <button type="button" class="btn btn-primary">Genel</button>
-  <button type="button" class="btn btn-success">Spor</button>
-  <button type="button" class="btn btn-info">Yaşam</button>
-  <button type="button" class="btn btn-warning">Haberler</button>
-  <button type="button" class="btn btn-danger">Son Dakika</button>
-  <button style="background-color:yellow;" type="button" class="btn"><a href="chat.php">Chat Alanı</a></button>
+
+    <button name="Gündem" type="button" class="btn btn-default">Gündem</button>
+    <button name="Genel" type="button" class="btn btn-primary">Genel</button>
+    <button name="Spor" type="button" class="btn btn-success">Spor</button>
+    <button name="Yaşam" type="button" class="btn btn-info">Yaşam</button>
+    <button name="Haberler" type="button" class="btn btn-warning">Haberler</button>
+    <button name="SonDakika" type="button" class="btn btn-danger">Son Dakika</button>
+    <button style="background-color:yellow;" type="button" class="btn"><a href="chat.php">Chat Alanı</a></button>
 
 
 </div>

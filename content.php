@@ -1,4 +1,7 @@
- <?php session_start(); ?>
+ <?php session_start(); 
+ error_reporting(0);
+
+ ?>
  <!DOCTYPE html>
  <html lang="en" dir="ltr">
  <head>
@@ -18,7 +21,7 @@
 
   <hr>
 
-  
+
   <!-- Degisen Baslık Alanlar -->
 
   <!-- Entry girme alanı , lakin giris yapmıssa -->
@@ -41,7 +44,7 @@
         <!-- Etiket -->
         <div style="text-align: center;" class="col-xs-10">
 
-          <input class="form-control" name="etiket" placeholder="Etiket giriniz , virgülle ayırınız " id="ex3" type="text">
+          <input class="form-control" name="etiket" placeholder="Etiket girebilirsiniz" id="ex3" type="text">
         </div><br><br>
         <input style="margin-left: 35%;" class="btn btn-primary " type="submit" value="Şutlaa" name="gonder" />
       </form>
@@ -54,8 +57,10 @@
 }
 
 ?>
+
+<!-- Gündeme göre -->
 <div style="border-right: 1px solid #aaa; overflow: scroll;" class="col-md-3">
-  <div style="text-align: center;"><b>Gündem</b></div><br>
+  <div style="text-align: center;"><h3>Gündem</h3></div><br>
   <ul class="list-group">
     <?php 
 
@@ -74,13 +79,15 @@
      while ($row=$stmt->fetch()) 
      {
       echo '
+      <li class="list-group-item bg-icerik">
+      <p style="color:white;"><h4 style="color:white;">'.$row["BASLIK"].'</h4><br></p>
+      <p style="color:#c0c0c0;"><i>'.$row["BASLIK_ICERIK"].'</i></p>
+      <p style="color:white; margin-left:65%;"><i>-'.$row["YAZAR_AD"].'&nbsp;</i>|&nbsp;'.$row["TARIH"].'</p>
       
-      
 
-      <li class="list-group-item bg-icerik"><b>'.$row["BASLIK"].'</b><br>'.$row["YAZAR_AD"].'</li>
+      </li><br>
 
-
-      ';        
+      ';    
     }
 
   }
@@ -91,10 +98,12 @@
 
 </div>
 
-<div style="border-right: 1px solid #aaa; overflow: scroll;" class="col-md-6">
-  <div style="text-align: center;"><b>En yeniler</b></div><br>
 
-  <ul class="list-group">
+<!-- En yeniler -->
+<div style="border-right: 1px solid #aaa; overflow: scroll;" class="col-md-6">
+  <div style="text-align: center;"><h3>En yeniler</h3></div><br>
+
+  <ul style="overflow: scroll;" class="list-group ">
     <?php 
     
     $kadi=$_SESSION['kullaniciad'];    
@@ -110,7 +119,13 @@
      while ($row=$stmt->fetch()) 
      {
       echo '
-      <li class="list-group-item bg-icerik"><b>'.$row["BASLIK"].'</b><br>'.$row["YAZAR_AD"].'</li>
+      <li class="list-group-item bg-icerik">
+      <p style="color:white;"><h4 style="color:white;">'.$row["BASLIK"].'</h4><br></p>
+      <p style="color:#c0c0c0;"><i>'.$row["BASLIK_ICERIK"].'</i></p>
+      <p style="color:white; margin-left:65%;"><i>-'.$row["YAZAR_AD"].'&nbsp;</i>|&nbsp;'.$row["TARIH"].'</p>
+      
+
+      </li><br>
 
       ';        
     }
@@ -124,15 +139,16 @@
 </div>
 
 
+<!-- Son dakika, -->
 <div class="col-md-3">
-  <div style="text-align: center; overflow: scroll;"><b>Son dakika</b></div><br>
+  <div style="text-align: center; overflow: scroll;"><h3>Son dakika</h3></div><br>
 
   <ul class="list-group">
     <?php 
 
     $durum="sondakika";
 
-    $query="SELECT * FROM BASLIK WHERE ETIKET=:sondakika ORDER BY ID DESC";
+    $query="SELECT * FROM BASLIK WHERE ETIKET LIKE %:sondakika% ORDER BY ID DESC";
     $stmt=$db->prepare($query);
     $stmt->execute(array('sondakika'=>$durum));
     if ($stmt->rowCount()<1) {
@@ -143,9 +159,15 @@
      while ($row=$stmt->fetch()) 
      {
       echo '
-      <li class="list-group-item bg-icerik"><b>'.$row["BASLIK"].'</b><br>'.$row["YAZAR_AD"].'</li>
+      <li class="list-group-item bg-icerik">
+      <p style="color:white;"><h4 style="color:white;">'.$row["BASLIK"].'</h4><br></p>
+      <p style="color:#c0c0c0;"><i>'.$row["BASLIK_ICERIK"].'</i></p>
+      <p style="color:white; margin-left:65%;"><i>-'.$row["YAZAR_AD"].'&nbsp;</i>|&nbsp;'.$row["TARIH"].'</p>
+      
 
-      ';        
+      </li><br>
+
+      ';    
     }
 
   }
