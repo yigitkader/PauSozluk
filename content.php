@@ -18,17 +18,7 @@
 
   <hr>
 
-  <?php 
-    $idd=$_SESSION['idd'];
-
-    quer="SELECT KULLANICI_ADI FROM USER JOIN BASLIK USER.ID=BASLIK.YAZAR_ID WHERE=:id";
-    $stmt=$db->prepare($quer);
-    $stmt->execute(array('id'=>$idd));
-    $roww=$stmt->fetch();
-
-
-   ?>
-
+  
   <!-- Degisen Baslık Alanlar -->
 
   <!-- Entry girme alanı , lakin giris yapmıssa -->
@@ -69,10 +59,13 @@
   <ul class="list-group">
     <?php 
 
+
+
     $queOriginal="paü";
     $query="SELECT * FROM BASLIK WHERE ETIKET=:etiket ORDER BY ID DESC";
     $stmt=$db->prepare($query);
     $stmt->execute(array('etiket'=>$queOriginal));
+
     if ($stmt->rowCount()<1) {
       echo '<b style="text-align:center;">Görüntülenebilecek icerik yok.</b>';
     }
@@ -81,10 +74,10 @@
      while ($row=$stmt->fetch()) 
      {
       echo '
-    
+      
       
 
-      <a href="icerik.php"><li class="list-group-item bg-icerik"><b>'.$row["BASLIK"].'</b></li></a>
+      <li class="list-group-item bg-icerik"><b>'.$row["BASLIK"].'</b><br>'.$row["YAZAR_AD"].'</li>
 
 
       ';        
@@ -117,7 +110,7 @@
      while ($row=$stmt->fetch()) 
      {
       echo '
-      <li class="list-group-item bg-icerik"><b>'.$row["BASLIK"].'</b><br>'.$row[''].'</li>
+      <li class="list-group-item bg-icerik"><b>'.$row["BASLIK"].'</b><br>'.$row["YAZAR_AD"].'</li>
 
       ';        
     }
@@ -150,7 +143,7 @@
      while ($row=$stmt->fetch()) 
      {
       echo '
-      <li class="list-group-item bg-icerik"><b>'.$row["BASLIK"].'</b></li>
+      <li class="list-group-item bg-icerik"><b>'.$row["BASLIK"].'</b><br>'.$row["YAZAR_AD"].'</li>
 
       ';        
     }

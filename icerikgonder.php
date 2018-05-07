@@ -7,6 +7,7 @@ include("connect.php");
 if (isset($_POST['gonder'])) {
 
   $idd=$_SESSION['idd'];
+  $ad=$_SESSION['kullaniciad'];
 
   $baslik=post('baslik');
   $baslik_icerik=post('baslik-icerik');
@@ -22,12 +23,13 @@ if (isset($_POST['gonder'])) {
 
   }
   else{
-    $query="INSERT INTO BASLIK(BASLIK,BASLIK_ICERIK,YAZAR_ID,TARIH,ETIKET) VALUES(:baslik,:baslikicerik,:yazarid,:tarih,:etiket)";
+    $query="INSERT INTO BASLIK(BASLIK,BASLIK_ICERIK,YAZAR_ID,YAZAR_AD,TARIH,ETIKET) VALUES(:baslik,:baslikicerik,:yazarid,:yazarad,:tarih,:etiket)";
     $stmt=$db->prepare($query);
     $stmt->execute(array(
       'baslik'=>$baslik,
       'baslikicerik'=>$baslik_icerik,
       'yazarid'=>$idd,
+      'yazarad'=>$ad,
       'tarih'=>$tarih,
       'etiket'=>$etiket
     ));
