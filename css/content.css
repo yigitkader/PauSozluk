@@ -1,5 +1,18 @@
 body{overflow-x:hidden;}
 
 .bg-icerik{
-	background-color: #0d488a;;
+	background-color: #0d488a;
+}
+
+.bg-sondakika{
+	background-color: #f90e0e;
+}
+
+.bg-durum{
+	background-color: #328484;
+}
+
+.bg-eksayfa{
+
+	background-color: #bfbfbf;
 }

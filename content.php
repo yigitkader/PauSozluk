@@ -64,10 +64,8 @@
   <ul class="list-group">
     <?php 
 
-
-
-    $queOriginal="paü";
-    $query="SELECT * FROM BASLIK WHERE ETIKET=:etiket ORDER BY ID DESC";
+    $queOriginal="gündem";
+    $query="SELECT TOP 15 * FROM BASLIK WHERE ETIKET=:etiket ORDER BY ID DESC";
     $stmt=$db->prepare($query);
     $stmt->execute(array('etiket'=>$queOriginal));
 
@@ -78,16 +76,15 @@
     {
      while ($row=$stmt->fetch()) 
      {
-      echo '
-      <li class="list-group-item bg-icerik">
-      <p style="color:white;"><h4 style="color:white;">'.$row["BASLIK"].'</h4><br></p>
-      <p style="color:#c0c0c0;"><i>'.$row["BASLIK_ICERIK"].'</i></p>
-      <p style="color:white; margin-left:65%;"><i>-'.$row["YAZAR_AD"].'&nbsp;</i>|&nbsp;'.$row["TARIH"].'</p>
-      
-
+      ?>
+      <li class="list-group-item bg-durum"><a href="icerik.php?icerik=<?php echo $row['ID'] ?>">
+        <p style="color:white;"><h4 style="color:white;"><?php echo $row["BASLIK"];  ?></h4><br></p></a>
+        <p style="color:#c0c0c0;"><i><?php echo substr($row["BASLIK_ICERIK"],0,250); ?></i></p>
+        <p style="color:black; margin-left:80%;"><i><?php echo $row["YAZAR_AD"] ; ?></i></p>
+        
       </li><br>
 
-      ';    
+      <?php 
     }
 
   }
@@ -105,6 +102,30 @@
 
   <ul style="overflow: scroll;" class="list-group ">
     <?php 
+
+    $sayfada=1;
+    $quee="SELECT * FROM BASLIK";
+    $stmt0=$db->prepare($quee);
+    $stmt0->execute();
+    $toplamIcerik=$stmt0->rowCount();
+    $toplam_sayfa=$toplamIcerik/$sayfada;
+
+    //$sayfa=isset($_GET['sayfa']) ? int($_GET['sayfa']) : 1;
+
+    // if($sayfa<1)
+    // {
+    //   $sayfa=1;
+    // } 
+    // if ($sayfa>$toplam_sayfa) {
+    //   $sayfa=$toplam_sayfa;
+
+    // }
+
+    // $limit=($sayfa-1)=$sayfada;
+    
+
+
+
     
     $kadi=$_SESSION['kullaniciad'];    
 
@@ -118,16 +139,17 @@
     {
      while ($row=$stmt->fetch()) 
      {
-      echo '
-      <li class="list-group-item bg-icerik">
-      <p style="color:white;"><h4 style="color:white;">'.$row["BASLIK"].'</h4><br></p>
-      <p style="color:#c0c0c0;"><i>'.$row["BASLIK_ICERIK"].'</i></p>
-      <p style="color:white; margin-left:65%;"><i>-'.$row["YAZAR_AD"].'&nbsp;</i>|&nbsp;'.$row["TARIH"].'</p>
-      
+      ?>
+      <li class="list-group-item bg-icerik"><a href="icerik.php?icerik=<?php echo $row['ID'] ?>">
+        <p style="color:white;"><h4 style="color:white;"><?php echo $row["BASLIK"];  ?></h4><br></p></a>
+        <p style="color:#c0c0c0;"><i><?php echo substr($row["BASLIK_ICERIK"],0,250); ?></i></p>
+        <p style="color:black; margin-left:80%;"><i><?php echo $row["YAZAR_AD"] ; ?></i></p>
+
 
       </li><br>
+      <!-- Sayfalama -->
 
-      ';        
+      <?php 
     }
 
   }
@@ -135,6 +157,24 @@
   ?>
 
 </ul>
+<div align="center" class="col-md-12">
+
+  <?php 
+  $s=0;
+
+  while ($s<$toplam_sayfa) {
+    $s++;
+    ?>
+
+    <a href="icerik.php?sayfa=<?php echo $s ?>"><?php echo $s; ?></a>
+    <?php         
+  }
+
+  ?>
+
+</div>
+
+
 
 </div>
 
@@ -148,35 +188,39 @@
 
     $durum="sondakika";
 
-    $query="SELECT * FROM BASLIK WHERE ETIKET LIKE %:sondakika% ORDER BY ID DESC";
+    $query="SELECT * FROM BASLIK WHERE ETIKET LIKE :sondakika ORDER BY ID DESC";
     $stmt=$db->prepare($query);
-    $stmt->execute(array('sondakika'=>$durum));
+    $stmt->execute(array('sondakika'=>'%'.$durum.'%'));
+
     if ($stmt->rowCount()<1) {
       echo '<b style="text-align:center;">Görüntülenebilecek icerik yok.</b>';
     }
     else
     {
-     while ($row=$stmt->fetch()) 
-     {
-      echo '
-      <li class="list-group-item bg-icerik">
-      <p style="color:white;"><h4 style="color:white;">'.$row["BASLIK"].'</h4><br></p>
-      <p style="color:#c0c0c0;"><i>'.$row["BASLIK_ICERIK"].'</i></p>
-      <p style="color:white; margin-left:65%;"><i>-'.$row["YAZAR_AD"].'&nbsp;</i>|&nbsp;'.$row["TARIH"].'</p>
-      
+      while ($row=$stmt->fetch()) 
+      {
+        ?>
+        <li class="list-group-item bg-sondakika"><a href="icerik.php?icerik=<?php echo $row['ID'] ?>">
+          <p style="color:white;"><h4 style="color:white;"><?php echo $row["BASLIK"];  ?></h4><br></p></a>
+          <p style="color:#c0c0c0;"><i><?php echo substr($row["BASLIK_ICERIK"],0,250); ?></i></p>
+          <p style="color:black; margin-left:80%;"><i><?php echo $row["YAZAR_AD"] ; ?></i></p>
 
-      </li><br>
 
-      ';    
+        </li><br>
+
+        <?php 
+      }
+
+
     }
 
-  }
+    ?>
 
-  ?>
-
-</ul>
+  </ul>
 
 </div>
+
+
 
 
 
