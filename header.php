@@ -6,7 +6,7 @@
     <div class="navbar-brand">
       <img src="img/pau.png" alt="" height="20" width="60">
     </div>
-    <a style="color:white;" class="navbar-brand" href="index.php"><b>Paü</b><b style="color:black">Sözlük</b></a>
+    <a style="color:white;" class="navbar-brand" href="index.php"><b>PaüSözlük</b></a>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

@@ -7,6 +7,8 @@ include("functions.php");
 // Gelen degere göre farklı klasörlere resim yükleme.
 
 
+//*** Dosyanın yükseklik ve genislik kontrolünü yap!! -> File upload acıgı icin
+
 if (isset($_POST['submit'])) 
 {
 
@@ -22,7 +24,7 @@ if (isset($_POST['submit']))
     $fileExt=substr($_FILES['img']['name'],-4,4);  // Name deki -4 ten 4 ü al.
 
 
-    $newFileName=$uploadFolder1."-user-".rand(0,9999).$fileExt;
+    $newFileName=$uploadFolder1."-pic-".rand(0,9999).$fileExt;
 
     if ($_FILES['img']['size'] > $maxSize) 
     {
@@ -42,15 +44,19 @@ if (isset($_POST['submit']))
                     echo 'Dosya yüklendi';   
 
                         // Buradan sqle gönder 
+                    $kadii=$_SESSION['kullaniciad'];
 
-                    $query="INSERT INTO AYAKKABI(KATEGORI,KISI_TIP,BASLIK,RESIM_URL) VALUES(:kategori,:kisitip,:baslik,:resimurl)";
+                    $query="UPDATE USER SET RESIM_URL=:resimurl WHERE KULLANICI_ADI=:kadi";
                     $stmt=$db->prepare($query);
-                    $stmt->execute(array('kategori'=>$kategori,
-                        'kisitip'=>$kisiTip,
-                        'baslik'=>$baslik,
-                        'resimurl'=>$newFileName));   
+                    $stmt->execute(array('resimurl'=>$newFileName,'kadi'=>$kadii));   
 
-                    echo '<meta http-equiv="refresh" content="2;url=admin-page.php" />' ; 
+                    $query2="SELECT RESIM_URL FROM USER WHERE KULLANICI_ADI=:kadi";
+                    $stmt2=$db->prepare($query2);
+                    $stmt2->execute(array('kadi'=>$kadii));
+                    $row=$stmt2->fetch();
+                    $_SESSION['resimurl']=$row['RESIM_URL'];
+
+                    echo '<meta http-equiv="refresh" content="2;url=profil.php" />' ; 
                 }
                 else {
                    echo 'Dosya yüklenememiştir';
@@ -59,13 +65,9 @@ if (isset($_POST['submit']))
        }
        else
        {
-        echo 'Yüklediginiz resim sadece jpeg, jpg veya png olabilir.';
+        echo 'Yüklediginiz resim sadece jpeg, jpg veya png olabilir ve bos gönderemezsiniz';
     }
 }
-
-
-
-
 
 }
 

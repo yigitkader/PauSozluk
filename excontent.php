@@ -18,16 +18,7 @@
 
   <hr>
 
-  <?php 
-    $idd=$_SESSION['idd'];
-
-    quer="SELECT KULLANICI_ADI FROM USER JOIN BASLIK USER.ID=BASLIK.YAZAR_ID WHERE=:id";
-    $stmt=$db->prepare($quer);
-    $stmt->execute(array('id'=>$idd));
-    $roww=$stmt->fetch();
-
-
-   ?>
+  
 
   <!-- Degisen Baslık Alanlar -->
 
@@ -37,7 +28,7 @@
     ?>
     <div style="margin-left: 15%;" class="container">
      <div class="form-group row">
-      <form action="icerikgonder.php" method="post">
+      <form>
 
         <div style="text-align: center;" class="col-xs-10">
           <!-- <label  for="ex3">Baslık</label> -->
@@ -53,10 +44,10 @@
 
           <input class="form-control" name="etiket" placeholder="Etiket giriniz , virgülle ayırınız " id="ex3" type="text">
         </div><br><br>
-        <input style="margin-left: 35%;" class="btn btn-primary " type="submit" value="Şutlaa" name="gonder" />
+        <input style="margin-left: 35%;" class="btn btn-primary " type="submit" value="Şutlaa" name="gonder">
       </form>
     </div>
-  </div><hr><br>
+  </div><hr>
 
 
   <?php    
@@ -64,106 +55,45 @@
 }
 
 ?>
-<div style="border-right: 1px solid #aaa; overflow: scroll;" class="col-md-3">
-  <div style="text-align: center;"><b>Gündem</b></div><br>
-  <ul class="list-group">
-    <?php 
-
-    $queOriginal="paü";
-    $query="SELECT * FROM BASLIK WHERE ETIKET=:etiket ORDER BY ID DESC";
-    $stmt=$db->prepare($query);
-    $stmt->execute(array('etiket'=>$queOriginal));
-    if ($stmt->rowCount()<1) {
-      echo '<b style="text-align:center;">Görüntülenebilecek icerik yok.</b>';
-    }
-    else
-    {
-     while ($row=$stmt->fetch()) 
-     {
-      echo '
-    
-      
-
-      <a href="icerik.php"><li class="list-group-item bg-icerik"><b>'.$row["BASLIK"].'</b></li></a>
 
 
-      ';        
-    }
+<div style="border-right: 1px solid #aaa;" class="col-md-3">
 
+  <?php
+  for ($i=0; $i <40 ; $i++) {
+    echo '
+    <ul class="nav nav-pills nav-stacked">
+    '.$i.'.Baslik<br>
+    </ul>
+    ';
   }
-
   ?>
 
-</ul>
 
 </div>
 
-<div style="border-right: 1px solid #aaa; overflow: scroll;" class="col-md-6">
-  <div style="text-align: center;"><b>En yeniler</b></div><br>
-
-  <ul class="list-group">
-    <?php 
-    
-    $kadi=$_SESSION['kullaniciad'];    
-
-    $query="SELECT * FROM BASLIK ORDER BY ID DESC";
-    $stmt=$db->prepare($query);
-    $stmt->execute();
-    if ($stmt->rowCount()<1) {
-      echo '<b style="text-align:center;">Görüntülenebilecek icerik yok.</b>';
-    }
-    else
-    {
-     while ($row=$stmt->fetch()) 
-     {
-      echo '
-      <li class="list-group-item bg-icerik"><b>'.$row["BASLIK"].'</b><br>'.$row[''].'</li>
-
-      ';        
-    }
-
-  }
-
-  ?>
-
-</ul>
-
+<!-- En populer yazılar -->
+<div style=" border-right:1px solid #aaa;" class="col-md-6">
+  <b>Baslık Olustur</b><br><br>
+  <?php
+  for ($i=0; $i <40 ; $i++) {
+   echo '
+   <b>'.$i.'.Popüler yazı</b><br>
+   ';
+ }
+ ?>
 </div>
 
-
+<!-- Son dakika haberleri -->
 <div class="col-md-3">
-  <div style="text-align: center; overflow: scroll;"><b>Son dakika</b></div><br>
-
-  <ul class="list-group">
-    <?php 
-
-    $durum="sondakika";
-
-    $query="SELECT * FROM BASLIK WHERE ETIKET=:sondakika ORDER BY ID DESC";
-    $stmt=$db->prepare($query);
-    $stmt->execute(array('sondakika'=>$durum));
-    if ($stmt->rowCount()<1) {
-      echo '<b style="text-align:center;">Görüntülenebilecek icerik yok.</b>';
-    }
-    else
-    {
-     while ($row=$stmt->fetch()) 
-     {
-      echo '
-      <li class="list-group-item bg-icerik"><b>'.$row["BASLIK"].'</b></li>
-
-      ';        
-    }
-
-  }
-
-  ?>
-
-</ul>
-
+  <?php
+  for ($i=0; $i <40 ; $i++) {
+   echo '
+   <b>'.$i.'.Son dakika haberi</b><br>
+   ';
+ }
+ ?>
 </div>
-
-
 
 
 </body>

@@ -12,9 +12,9 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
 	crossorigin="anonymous"></script>
 	<script
-  src="https://code.jquery.com/jquery-3.3.1.js"
-  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  crossorigin="anonymous"></script>
+	src="https://code.jquery.com/jquery-3.3.1.js"
+	integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+	crossorigin="anonymous"></script>
 
 	
 	<link rel="stylesheet" type="text/css" href="css/profil-page.css">
@@ -22,14 +22,9 @@
 	<script type="text/javascript">
 		
 		$(function(){
-
-			$("frm").hide();
-
+			$("#frm").hide();
 			$("#btnn").click(function(){
-				$("#frm").hide();
-
-			},function(){
-				$("#frm").show();
+				$("#frm").toggle();
 			});
 		});
 
@@ -41,69 +36,123 @@
 
 	<?php 
 
+	if ($_SESSION['oturum']==1) {
+
+		?>	
+		<!-- Profil Alanı -->
+		<div style="" class="">
+			<div class="container">
+				<div class="col-lg-12 col-sm-12">
+					<div class="card hovercard">
+						<div class="card-background">
+							<img class="card-bkimg" alt="" src="http://lorempixel.com/100/100/people/9/">
+
+							<!-- http://lorempixel.com/850/280/people/9/ -->
+						</div>
+						<div class="useravatar">
+							<!-- resim url buradan cekilecek -->
+							<img alt="" src="<?php echo $_SESSION['resimurl']; ?>"> 
+						</div>
+						<div class="card-info"> <span class="card-title"><?php echo $_SESSION['kullaniciad']; ?></span>
+
+						</div>
+
+					</div>
+
+
+					<?php 
+					$kadi=$_SESSION['kullaniciad'];
+					$query="SELECT COUNT(*) FROM BASLIK WHERE KULLANICI_ADI=:kadi";
+					$stmt=$db->prepare($query);
+					$stmt->execute(array('kadi'=>$kadi));
+					$postSayi=$stmt->rowCount();
+
+					?>		
+					<div class="well">
+						<div  class="tab-content">
+							<div class="tab-pane fade in active" id="tab1">
+								<b>Paylaşılan Baslık : </b>
+								<b><?php echo $postSayi; ?></b>
+							</div>
+
+
+						</div>
+
+					</div>
+					<button id="btnn">Resmi Değiştir</button>
+					<div id="frm">
+						<form action="upload.php" method="post" enctype="multipart/form-data">
+							Yükelenecek resmi seciniz:
+							<input type="file" name="img" id="fileToUpload"><br><br>
+							<input type="submit" name="submit" value="Yukle">
+
+						</form>
+
+					</div><hr>
+
+				</div>				
+
+			</div>
+			
+			<!-- Kullanıcının postlarını ve posta yapılan yorumları getir -->
+			<div style="text-align: center;" class="container">
+
+				<?php 
+				$idd=$_SESSION['idd'];
+
+				$query="SELECT * FROM BASLIK JOIN USER ON USER.ID=BASLIK.YAZAR_ID WHERE USER.ID=:id";
+				$stmt=$db->prepare($query);
+				$stmt->execute(array('id'=>$idd));
+
+				if ($stmt->rowCount()==0) {
+					echo '<b>Henüz hic paylasım yok</b>';
+				}
+				else{
+
+					// Yazarın postları gelicek 
+					// Burası düzenlenebilir.!!                                    
+
+					echo "<table class='table'>
+
+					<tr>
+					<th>Note  </th>
+					<br></tr> ";
+
+					while($row=$stmt->fetch()) 
+					{   
+
+
+						echo "<tr>
+
+						<td>".$row['BASLIK']."</td>
+						<td>".$row['TARIH']."</td>";
+						echo '</tr>';
+
+					}
+
+					echo "</table>";	
+
+				}
+				?>
+				
+			</div>
+
+
+		</div>
+
+
+		<?php 
+		
+	}
+	else{
+		echo '<meta http-equiv="refresh" content="1;url=index.php" />' ;
+	}
 
 
 
 	?>
 
-	<!-- Profil Alanı -->
-	<div style="" class="">
-		<div class="container">
-			<div class="col-lg-12 col-sm-12">
-				<div class="card hovercard">
-					<div class="card-background">
-						<img class="card-bkimg" alt="" src="http://lorempixel.com/100/100/people/9/">
-
-						<!-- http://lorempixel.com/850/280/people/9/ -->
-					</div>
-					<div class="useravatar">
-						<!-- resim url buradan cekilecek -->
-						<img alt="" src="<?php echo $_SESSION['resimurl']; ?>"> 
-					</div>
-					<div class="card-info"> <span class="card-title"><?php echo $_SESSION['kullaniciad']; ?></span>
-						
-					</div>
-
-				</div>
-
-				
-				<?php 
-				$kadi=$_SESSION['kullaniciad'];
-				$query="SELECT COUNT(*) FROM BASLIK WHERE KULLANICI_AD=:kadi";
-				$stmt=$db->prepare($query);
-				$stmt->execute(array('kadi'=>$kadi));
-				$postSayi=$stmt->rowCount();
-
-				?>		
-				<div class="well">
-					<div class="tab-content">
-						<div class="tab-pane fade in active" id="tab1">
-							<b>Paylaşılan Baslık : </b>
-							<b><?php echo $postSayi; ?></b>
-						</div>
-						
-						
-					</div>
-
-				</div>
-				<button id="btnn">Resmi Değiştir</button>
-				<div id="frm">
-					<form action="upload.php" method="post" enctype="multipart/form-data">
-						Yükelenecek resmi seciniz:
-						<input type="file" name="img" id="fileToUpload"><br><br>
-						<input type="submit" name="submit" value="Yukle">
-
-					</form>
-					
-				</div>
-				
-			</div>				
-
-		</div>
-
-
-	</div>
-
+	
 
 
 
