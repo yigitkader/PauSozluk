@@ -5,6 +5,7 @@
  <!DOCTYPE html>
  <html lang="en" dir="ltr">
  <head>
+
    <meta charset="utf-8">
    <title></title>
 
@@ -15,8 +16,31 @@
    <!-- Latest compiled and minified JavaScript -->
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
    <link rel="stylesheet" type="text/css" href="css/content.css">
- </head>
- <body>
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+
+
+   <script type="text/javascript">
+
+    $(function(){
+
+      $("#entry").hide();
+      $("#entry-button").click(function(){
+
+        $("#entry").toggle();
+
+      });
+
+
+
+
+    });
+  </script>
+
+</head>
+<body>
   <?php include 'functions.php'; include('connect.php'); ?>
 
   <hr>
@@ -28,7 +52,11 @@
   <?php if ($_SESSION['oturum']==1) {
 
     ?>
-    <div style="margin-left: 15%;" class="container">
+    <div style="margin-left: 42%;" class="container">
+      <button id="entry-button" class="btn btn-primary">Entry gir</button>  
+    </div><br>
+    
+    <div id="entry" style="margin-left: 15%;" class="container">
      <div class="form-group row">
       <form action="icerikgonder.php" method="post">
 
@@ -65,7 +93,7 @@
     <?php 
 
     $queOriginal="gündem";
-    $query="SELECT TOP 15 * FROM BASLIK WHERE ETIKET=:etiket ORDER BY ID DESC";
+    $query="SELECT * FROM BASLIK WHERE ETIKET=:etiket ORDER BY ID DESC";
     $stmt=$db->prepare($query);
     $stmt->execute(array('etiket'=>$queOriginal));
 
@@ -103,25 +131,16 @@
   <ul style="overflow: scroll;" class="list-group ">
     <?php 
 
-    $sayfada=1;
-    $quee="SELECT * FROM BASLIK WHERE STAR ";
+    $sayfada=5;
+    $quee="SELECT * FROM BASLIK";
     $stmt0=$db->prepare($quee);
     $stmt0->execute();
+    
     $toplamIcerik=$stmt0->rowCount();
-    $toplam_sayfa=$toplamIcerik/$sayfada;
 
-    //$sayfa=isset($_GET['sayfa']) ? int($_GET['sayfa']) : 1;
+    $toplam_sayfa=ceil($toplamIcerik/$sayfada);
 
-    // if($sayfa<1)
-    // {
-    //   $sayfa=1;
-    // } 
-    // if ($sayfa>$toplam_sayfa) {
-    //   $sayfa=$toplam_sayfa;
-
-    // }
-
-    // $limit=($sayfa-1)=$sayfada;
+    $limit=($sayfa-1)+ $sayfada;
     
 
 
@@ -129,7 +148,7 @@
     
     $kadi=$_SESSION['kullaniciad'];    
 
-    $query="SELECT * FROM BASLIK ORDER BY ID DESC";
+    $query="SELECT * FROM BASLIK ORDER BY ID DESC LIMIT $limit";
     $stmt=$db->prepare($query);
     $stmt->execute();
     if ($stmt->rowCount()<1) {
@@ -157,6 +176,8 @@
   ?>
 
 </ul>
+
+<!-- Sayfalama -->
 <div align="center" class="col-md-12">
 
   <?php 
@@ -166,7 +187,7 @@
     $s++;
     ?>
 
-    <a href="icerik.php?sayfa=<?php echo $s ?>"><?php echo $s; ?></a>
+    <a href="enyeniler.php?sayfa=<?php echo $s ?>"><?php echo $s; ?></a>
     <?php         
   }
 

@@ -13,9 +13,9 @@
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div style="margin-top:-25px; margin-left: 0 ;" class="navbar-brand">
-      <img src="img/logo.png" alt="" height="70" width="150">
+    <a href="index.php"><img src="img/12.png" alt="" height="70" width="150"></a>
     </div>
-    <a style="color:white;" class="navbar-brand" href="index.php"><b>PaüSözlük</b></a>
+    
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
