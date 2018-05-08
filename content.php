@@ -81,7 +81,7 @@
         <p style="color:white;"><h4 style="color:white;"><?php echo $row["BASLIK"];  ?></h4><br></p></a>
         <p style="color:#c0c0c0;"><i><?php echo substr($row["BASLIK_ICERIK"],0,250); ?></i></p>
         <p style="color:black; margin-left:80%;"><i><?php echo $row["YAZAR_AD"] ; ?></i></p>
-        
+
       </li><br>
 
       <?php 
@@ -104,7 +104,7 @@
     <?php 
 
     $sayfada=1;
-    $quee="SELECT * FROM BASLIK";
+    $quee="SELECT * FROM BASLIK WHERE STAR ";
     $stmt0=$db->prepare($quee);
     $stmt0->execute();
     $toplamIcerik=$stmt0->rowCount();

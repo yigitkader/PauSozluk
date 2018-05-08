@@ -34,7 +34,7 @@
 					<p style=""><h4 style="color:black;"><?php echo $row["BASLIK"];  ?></h4><br></p></a>
 					<p style="color:black;"><i><?php echo substr($row["BASLIK_ICERIK"],0,250); ?></i></p>
 					<p style="color:black; margin-left:80%;"><i><?php echo "- ".$row["YAZAR_AD"]."&nbsp;".$row["TARIH"] ; ?></i></p>
-					<form>
+					<form action="" method="post">
 						<button type='submit' name="begen"><i class="fas fa-heart"></i></button><span class="badge badge-light"><?php 
 						echo $row['STAR'] ; ?></span>
 
@@ -54,21 +54,33 @@
 	</div>
 
 	<?php 
-		$message1=$deger;
-		echo "<script type='text/javascript'>alert('$message1');</script>";
-
-	// if (isset($_POST['begen'])) {
 
 
-	// 	$query="SELECT STAR FROM BASLIK WHERE ID=:id";
-	// 	$stmt=$db->prepare($query);
-	// 	$stmt->execute(array('id'=>$baslikid));
-	// 	$deger=$stmt->fetch();
+	if (isset($_POST['begen'])) {
+
+
+		$query="SELECT * FROM BASLIK WHERE ID=:id";
+		$stmt=$db->prepare($query);
+		$stmt->execute(array('id'=>$baslikid));
+		$deger=$stmt->fetch();
+		$yenideger=$deger['STAR']+1;
+
+		//Update edilme
+		$queryx="UPDATE BASLIK  SET STAR=:st WHERE ID=:id";
+		$stmtx=$db->prepare($queryx);
+		$stmtx->execute(array('st'=>$yenideger,'id'=>$baslikid));
+
+		if (stmtx) {
+			echo '<meta http-equiv="refresh" content="1;url=icerik.php?icerik='.$baslikid.'  " />' ;
+		}
+
+		// Kontrol
+		// $message1=$yenideger;
+		// echo "<script type='text/javascript'>alert('$message1');</script>";
 
 
 
-
-	// }
+	}
 
 	?>
 

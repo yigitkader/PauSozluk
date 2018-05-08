@@ -61,10 +61,10 @@
 
 
 					<?php 
-					$kadi=$_SESSION['kullaniciad'];
-					$query="SELECT COUNT(*) FROM BASLIK WHERE KULLANICI_ADI=:kadi";
+					$kid=$_SESSION['idd'];
+					$query="SELECT * FROM BASLIK WHERE YAZAR_ID=:kid";
 					$stmt=$db->prepare($query);
-					$stmt->execute(array('kadi'=>$kadi));
+					$stmt->execute(array('kid'=>$kid));
 					$postSayi=$stmt->rowCount();
 
 					?>		
@@ -103,59 +103,62 @@
 				$query="SELECT * FROM BASLIK JOIN USER ON USER.ID=BASLIK.YAZAR_ID WHERE USER.ID=:id";
 				$stmt=$db->prepare($query);
 				$stmt->execute(array('id'=>$idd));
-
+					
 				if ($stmt->rowCount()==0) {
 					echo '<b>Henüz hic paylasım yok</b>';
 				}
 				else{
+					?>
+					
+					<table class='table'>
 
-					// Yazarın postları gelicek 
-					// Burası düzenlenebilir.!!                                    
+						<tr>
+							<th>Paylasımlar</th>
+							<br></tr> 
+							<?php 
+							while($row=$stmt->fetch()) 
+							{   
+								?>
 
-					echo "<table class='table'>
+								<tr>
 
-					<tr>
-					<th>Note  </th>
-					<br></tr> ";
+									<td><?php echo $row['BASLIK'] ; ?></td>
+									<td><?php echo $row['TARIH'] ?></td>
 
-					while($row=$stmt->fetch()) 
-					{   
+								</tr>
 
+								<?php 
+							}
+							?>	
+						</table>
 
-						echo "<tr>
+						<?php 
 
-						<td>".$row['BASLIK']."</td>
-						<td>".$row['TARIH']."</td>";
-						echo '</tr>';
 
 					}
+					?>
 
-					echo "</table>";	
+				</div>
 
-				}
-				?>
-				
+
 			</div>
 
 
-		</div>
+			<?php 
 
-
-		<?php 
-		
-	}
-	else{
-		echo '<meta http-equiv="refresh" content="1;url=index.php" />' ;
-	}
+		}
+		else{
+			echo '<meta http-equiv="refresh" content="1;url=index.php" />' ;
+		}
 
 
 
-	?>
-
-	
+		?>
 
 
 
 
-</body>
-</html>
+
+
+	</body>
+	</html>
