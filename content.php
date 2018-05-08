@@ -16,10 +16,10 @@
    <!-- Latest compiled and minified JavaScript -->
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
    <link rel="stylesheet" type="text/css" href="css/content.css">
-    <script
-  src="https://code.jquery.com/jquery-3.3.1.js"
-  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  crossorigin="anonymous"></script>
+   <script
+   src="https://code.jquery.com/jquery-3.3.1.js"
+   integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+   crossorigin="anonymous"></script>
 
 
    <script type="text/javascript">
@@ -77,8 +77,7 @@
         <input style="margin-left: 35%;" class="btn btn-primary " type="submit" value="Şutlaa" name="gonder" />
       </form>
     </div>
-  </div><hr><br>
-
+  </div><hr>
 
   <?php    
 
@@ -87,7 +86,7 @@
 ?>
 
 <!-- Gündeme göre -->
-<div style="border-right: 1px solid #aaa; overflow: scroll;" class="col-md-3">
+<div style="overflow: scroll;" class="col-md-3">
   <div style="text-align: center;"><h3>Gündem</h3></div><br>
   <ul class="list-group">
     <?php 
@@ -125,22 +124,24 @@
 
 
 <!-- En yeniler -->
-<div style="border-right: 1px solid #aaa; overflow: scroll;" class="col-md-6">
+<div style="border-right: 1px solid #aaa; border-left: 1px solid #aaa; overflow: scroll;" class="col-md-6">
   <div style="text-align: center;"><h3>En yeniler</h3></div><br>
 
   <ul style="overflow: scroll;" class="list-group ">
     <?php 
 
-    $sayfada=5;
+
     $quee="SELECT * FROM BASLIK";
     $stmt0=$db->prepare($quee);
     $stmt0->execute();
     
     $toplamIcerik=$stmt0->rowCount();
 
+    $sayfada=5;
+
     $toplam_sayfa=ceil($toplamIcerik/$sayfada);
 
-    $limit=($sayfa-1)+ $sayfada;
+    $limit=($sayfa-1)+ $sayfada; 
     
 
 
@@ -148,7 +149,7 @@
     
     $kadi=$_SESSION['kullaniciad'];    
 
-    $query="SELECT * FROM BASLIK ORDER BY ID DESC LIMIT $limit";
+    $query="SELECT * FROM BASLIK ORDER BY ID DESC $limit,$sayfada";
     $stmt=$db->prepare($query);
     $stmt->execute();
     if ($stmt->rowCount()<1) {
@@ -187,7 +188,7 @@
     $s++;
     ?>
 
-    <a href="enyeniler.php?sayfa=<?php echo $s ?>"><?php echo $s; ?></a>
+    <a href="index.php?sayfa=<?php echo $s ?>"><?php echo $s; ?></a>
     <?php         
   }
 
