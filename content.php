@@ -83,43 +83,65 @@
 
 }
 
+$drm="Gündem";
+if ($_GET['veri']) {
+  $drm=$_GET['veri'];
+  
+}
 ?>
 
+
+
 <!-- Gündeme göre -->
-<div style="overflow: scroll;" class="col-md-3">
-  <div style="text-align: center;"><h3>Gündem</h3></div><br>
-  <ul class="list-group">
+
+<div id="drm" style="overflow: scroll;" class="col-md-3">
+  <div class="drm-inside">
+    <div style="text-align: center;"><h3><?php echo $drm; ?></h3></div><br>
+  <ul  class="list-group">
     <?php 
 
-    $queOriginal="gündem";
-    $query="SELECT * FROM BASLIK WHERE ETIKET=:etiket ORDER BY ID DESC";
-    $stmt=$db->prepare($query);
-    $stmt->execute(array('etiket'=>$queOriginal));
+    // $queOriginal=isset($_GET['veri']) ? (string)$_GET['veri'] : "Gündem";
 
-    if ($stmt->rowCount()<1) {
-      echo '<b style="text-align:center;">Görüntülenebilecek icerik yok.</b>';
-    }
-    else
-    {
-     while ($row=$stmt->fetch()) 
-     {
-      ?>
-      <li class="list-group-item bg-durum"><a href="icerik.php?icerik=<?php echo $row['ID'] ?>">
-        <p style="color:white;"><h4 style="color:white;"><?php echo $row["BASLIK"];  ?></h4><br></p></a>
-        <p style="color:#c0c0c0;"><i><?php echo substr($row["BASLIK_ICERIK"],0,250); ?></i></p>
-        <p style="color:black; margin-left:80%;"><i><?php echo $row["YAZAR_AD"] ; ?></i></p>
 
-      </li><br>
 
-      <?php 
-    }
+    $queOriginal=$drm;
+    
+    
+    
 
+    // echo $queOriginal;
+   $query="SELECT * FROM BASLIK WHERE ETIKET=:etiket ORDER BY ID DESC";
+   $stmt=$db->prepare($query);
+   $stmt->execute(array('etiket'=>$queOriginal));
+
+   if ($stmt->rowCount()<1) {
+    echo '<b style="text-align:center;">Görüntülenebilecek icerik yok.</b>';
+  }
+  else
+  {
+   while ($row=$stmt->fetch()) 
+   {
+    ?>
+    <li class="list-group-item bg-durum"><a href="icerik.php?icerik=<?php echo $row['ID'] ?>">
+      <p style="color:white;"><h4 style="color:white;"><?php echo $row["BASLIK"];  ?></h4><br></p></a>
+      <p style="color:#c0c0c0;"><i><?php echo substr($row["BASLIK_ICERIK"],0,250); ?></i></p>
+      <p style="color:black; margin-left:80%;"><i><?php echo $row["YAZAR_AD"] ; ?></i></p>
+
+
+    </li><br>
+
+    <?php 
   }
 
-  ?>
+}
+
+?>
 
 </ul>
 
+    
+  </div>
+  
 </div>
 
 

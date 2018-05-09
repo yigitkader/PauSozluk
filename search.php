@@ -15,9 +15,46 @@
 <body>
 	<?php include 'header.php'; include('connect.php'); include('functions.php'); ?><br><br>
 
+
+<!-- Gündeme göre -->
+<div style="overflow: scroll;" class="col-md-3">
+  <div style="text-align: center;"><h3>Gündem</h3></div><br>
+  <ul class="list-group">
+    <?php 
+
+    $queOriginal="gündem";
+    $query="SELECT * FROM BASLIK WHERE ETIKET=:etiket ORDER BY ID DESC";
+    $stmt=$db->prepare($query);
+    $stmt->execute(array('etiket'=>$queOriginal));
+
+    if ($stmt->rowCount()<1) {
+      echo '<b style="text-align:center;">Görüntülenebilecek icerik yok.</b>';
+    }
+    else
+    {
+     while ($row=$stmt->fetch()) 
+     {
+      ?>
+      <li class="list-group-item bg-durum"><a href="icerik.php?icerik=<?php echo $row['ID'] ?>">
+        <p style="color:white;"><h4 style="color:white;"><?php echo $row["BASLIK"];  ?></h4><br></p></a>
+        <p style="color:#c0c0c0;"><i><?php echo substr($row["BASLIK_ICERIK"],0,250); ?></i></p>
+        <p style="color:black; margin-left:80%;"><i><?php echo $row["YAZAR_AD"] ; ?></i></p>
+
+      </li><br>
+
+      <?php 
+    }
+
+  }
+
+  ?>
+
+</ul>
+
+</div>
 	
-	<div class="container">
-		<ul class="list-group">
+	<div class="container col-md-6">
+		<ul class="list-group"><h3>Sonuclar</h3><br>
 
 			<?php 
 			if (isset($_GET['ara'])) {
@@ -38,27 +75,36 @@
 					$query="SELECT * FROM BASLIK WHERE BASLIK LIKE :baslik  ORDER BY ID";
 					$stmt=$db->prepare($query);
 					$stmt->execute(array('baslik'=>'%'.$aranan.'%'));
-
-					while ($row=$stmt->fetch()) 
-					{
-						?>
-						<li class="list-group-item bg-eksayfa">
-							<p style=""><h4 style="color:black;"><?php echo $row["BASLIK"];  ?></h4><br></p>
-							<p style="color:black;"><i><?php echo substr($row["BASLIK_ICERIK"],0,250); ?></i></p>
-							<p style="color:black; margin-left:80%;"><i><?php echo "- ".$row["YAZAR_AD"]."&nbsp;".$row["TARIH"] ; ?></i></p>
-							<form action="" method="post">
-								<button type='submit' name="begen"><i class="fas fa-heart"></i></button><span class="badge badge-light"><?php 
-								echo $row['STAR'] ; ?></span>
-
-							</form>
-						</li><br>
-
-
-						<!-- Sayfalama -->
-
-						<?php 
+					if ($stmt->rowCount()<1) {
+						echo 'Aradığınıza dair herhangi bisey bulunamadı';
+						
 					}
+					else
+					{
 
+
+
+						while ($row=$stmt->fetch()) 
+						{
+							?>
+							<li class="list-group-item bg-eksayfa">
+								<p style=""><h4 style="color:black;"><?php echo $row["BASLIK"];  ?></h4></p>
+								<p style="color:black;"><i><?php echo substr($row["BASLIK_ICERIK"],0,250); ?></i></p>
+								<p style="color:black; margin-left:80%;"><i><?php echo "- ".$row["YAZAR_AD"]."&nbsp;".$row["TARIH"] ; ?></i></p>
+								<form action="" method="post">
+									<button type='submit' name="begen"><i class="fas fa-heart"></i></button><span class="badge badge-light"><?php 
+									echo $row['STAR'] ; ?></span>
+
+								</form>
+							</li><br>
+
+
+							<!-- Sayfalama -->
+
+							<?php 
+						}
+
+					}
 				}
 
 
