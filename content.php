@@ -141,15 +141,23 @@
 
     $toplam_sayfa=ceil($toplamIcerik/$sayfada);
 
-    $limit=($sayfa-1)+ $sayfada; 
+    $sayfa=isset($_GET['sayfa']) ? (int)$_GET['sayfa'] : 1;
+
+    if ($sayfa<1) {
+      $sayfa=1;
+      
+    }
+    if ($sayfa>$toplam_sayfa) {
+      $sayfa=$toplam_sayfa;
+      
+    }
+
+    $limit=($sayfa-1) * $sayfada; 
     
-
-
-
     
     $kadi=$_SESSION['kullaniciad'];    
 
-    $query="SELECT * FROM BASLIK ORDER BY ID DESC $limit,$sayfada";
+    $query="SELECT * FROM BASLIK ORDER BY ID DESC LIMIT $limit,$sayfada";
     $stmt=$db->prepare($query);
     $stmt->execute();
     if ($stmt->rowCount()<1) {

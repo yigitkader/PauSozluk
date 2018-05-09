@@ -21,7 +21,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <form method="get" action="search.php" style="margin-left:23%;" class="navbar-form navbar-left">
         <div class="form-group">
-          <input size="50%;" type="text" name="arama" class="form-control" placeholder="Search">
+          <input size="50%;" type="text" name="arama" class="form-control" placeholder="Baslık ara..">
         </div>
         
         <button name="ara" type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
